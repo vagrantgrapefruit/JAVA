@@ -1,0 +1,79 @@
+package DataConnect;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
+
+public class DataConn {
+	private static Connection getConn()
+	{
+		String driver = "com.mysql.jdbc.Driver";
+	    String url = "jdbc:mysql://localhost:3306/meetingmanage";
+	    String username = "root";
+	    String password = "qc54*Uz";
+	    Connection conn = null;
+	    try {
+	        Class.forName(driver); //classLoader,加载对应驱动
+	        conn = (Connection) DriverManager.getConnection(url, username, password);
+	    } catch (ClassNotFoundException e) {
+	        e.printStackTrace();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return conn;
+	}
+	
+	
+	public  int login(String userName,String passWord) {
+	    Connection conn = getConn();
+	    String sql = "select * from tbl_user where UserName='"+userName+"'";	    
+	    try {
+	    	Statement stat=conn.createStatement();
+	        ResultSet rs = stat.executeQuery(sql);
+	        int row = rs.getRow();
+	        if(row==1)
+	        {
+	          while (rs.next()) {
+	            String pass=rs.getString("PassWord");
+	            if(pass.equals(passWord))
+	            		return 1;
+	            else 
+	            	return 2;
+	          	}
+	        }
+			stat.close();
+			conn.close();
+	    } catch (SQLException e) {
+	       
+	        return 3;
+	    }
+	    return 4;
+	}
+
+	public String GetRole(String userName)
+	{
+	 	Connection conn = getConn();
+	    String sql = "select * from tbl_user where UserName="+userName;
+	    PreparedStatement pstmt;
+	    try {
+	        pstmt = (PreparedStatement)conn.prepareStatement(sql);
+	        ResultSet rs = pstmt.executeQuery();
+	        int row = rs.getRow();
+	        if(row==1)
+	        {
+	          while (rs.next()) {
+	            String role=rs.getString("Role");
+	            	return role;
+	          	}
+	        }
+	        else 
+	        	return null;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	    return null;
+	}
+}

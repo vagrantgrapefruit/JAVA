@@ -1,0 +1,11 @@
+[genuitec-file-id="wc1-23"],[genuitec-lp-path="/MeetRoomManage/WebRoot/Content/bootstrap-table/extensions/group-by-v2/bootstrap-table-group-by.css"],[genuitec-lp-enabled=false]{
+  /* for codelive */
+}
+
+.bootstrap-table .table > tbody > tr.groupBy {
+    cursor: pointer;
+}
+
+.bootstrap-table .table > tbody > tr.groupBy.expanded {
+
+}

@@ -1,0 +1,55 @@
+<%@ page language="java" import="java.util.*" import="DataConnect.DataConn"  pageEncoding="UTF-8"%>
+<jsp:useBean id="conn" class="DataConnect.DataConn"></jsp:useBean>
+<jsp:setProperty property="Coonetion" name="conn"/>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String userName = request.getParameter("UserName");
+String passWord = request.getParameter("PassWord");
+if(conn.login(userName,passWord))
+{
+	String role = conn.GetRole(userName);
+	if(role.equals("用户"))
+	{
+		response
+	}
+	else if(role.equals("老板"))
+	{
+	
+	}
+	else if(role.equals("管理员"))
+	{
+	
+	}
+}
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'Login.jsp' starting page</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<script type="text/javascript" src="src/jquery-3.2.1.min.js"></script>
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+  </head>
+  <body>
+	  <form action="Login.jsp">
+	    <div >
+	    	用户名：<input type="text" name="UserName" /><br/>
+	    </div>
+	    <div >
+	    	密码：<input type="password" name="PassWord" /><br/>
+	    </div>
+	    <input type="submit" value="登陆">
+	  </form>
+  </body>
+</html>

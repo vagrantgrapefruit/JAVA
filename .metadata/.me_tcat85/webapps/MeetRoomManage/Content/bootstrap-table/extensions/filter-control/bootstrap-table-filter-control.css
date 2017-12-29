@@ -1,0 +1,17 @@
+[genuitec-file-id="wc1-21"],[genuitec-lp-path="/MeetRoomManage/WebRoot/Content/bootstrap-table/extensions/filter-control/bootstrap-table-filter-control.css"],[genuitec-lp-enabled=false]{
+  /* for codelive */
+}
+
+/**
+ * @author: Dennis Hernández
+ * @webSite: http://djhvscf.github.io/Blog
+ * @version: v2.1.1
+ */
+
+.no-filter-control {
+    height: 34px;
+}
+
+.filter-control {
+    margin: 0 2px 2px 2px;
+}

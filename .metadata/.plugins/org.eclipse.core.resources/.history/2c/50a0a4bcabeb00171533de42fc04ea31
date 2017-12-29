@@ -1,0 +1,135 @@
+<%@ page language="java" import="java.util.*" import="DataConnect.DataConn"  pageEncoding="UTF-8"%>
+<jsp:useBean id="conn" class="DataConnect.DataConn"></jsp:useBean>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String userName = request.getParameter("UserName");
+String passWord = request.getParameter("PassWord");
+out.println(userName+"  "+passWord);
+if(userName!=null){
+if(conn.login(userName,passWord)==1)
+{
+	String role = conn.GetRole(userName);
+	session.setAttribute("user",userName);
+	session.setAttribute("userType",role);
+	session.setAttribute("isLogin", true);
+
+	
+	if(role.equals("用户"))
+	{
+		response.sendRedirect("SpaceTime.jsp");
+	}
+	else if(role.equals("老板"))
+	{
+	response.sendRedirect("StartMeeting.jsp");
+	}
+	else if(role.equals("管理员"))
+	{
+	response.sendRedirect("SetMeeting.jsp");
+	}
+}
+else{
+	out.println("用户名或密码有误！！！！");
+}
+}
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en" class="no-js">
+<head runat="server">
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="text/html; charset=utf-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>login</title>
+<link rel="stylesheet" type="text/css" href="Content/normalize.css" />
+<link rel="stylesheet" type="text/css" href="Content/demo.css" />
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="Content/component.css" />
+<!--<script src="Scripts/html5.js"></script>-->
+<script src="Scripts/jquery-1.10.2.min.js"></script>
+<!--<script src="Scripts/Account.js"></script>-->
+<script>
+    $(function () {
+        $("#LoginSys").click(function () {
+            LoginSys();
+        });
+        $("#UserName").keydown(function (e) {
+            var curkey = e.which;
+            if (curkey == 13) {
+                LoginSys();
+                return false;
+            }
+        });
+        $("#Password").keydown(function (e) {
+            var curkey = e.which;
+            if (curkey == 13) {
+                LoginSys();
+                return false;
+            }
+        });
+        /*$("#ValidateCode").keydown(function (e) {
+            var curkey = e.which;
+            if (curkey == 13) {
+                LoginSys();
+                return false;
+            }
+        });*/
+
+
+    });
+function LoginSys() {
+debugger;
+            $("#mes").html(""); 
+            $("#UserName").removeClass("input-validation-error");
+            $("#Password").removeClass("input-validation-error");
+            $("#ValidateCode").removeClass("input-validation-error");
+            if ($.trim($("#UserName").val()) == "") {
+                $("#UserName").addClass("input-validation-error").focus();
+                $("#mes").html("用户名不能为空！");
+                return;
+            }
+            if ($.trim($("#Password").val()) == "") {
+                $("#Password").addClass("input-validation-error").focus();
+                $("#mes").html("密码不能为空！");
+                
+                return;
+            }
+
+            $.get("Login.jsp", {UserName: $("#UserName").val(), PassWord: $("#Password").val() }, function (data) {
+                
+
+            });
+            return false;  
+        };
+</script>
+</head>
+<body>
+		<div class="container demo-1">
+			<div class="content">
+				<div id="large-header" class="large-header">
+					<canvas id="demo-canvas"></canvas>
+					<div class="logo_box">
+						<h3>欢迎你</h3>
+						<form action="#" name="f" method="post" runat="server">
+							<div class="input_outer">
+								<span  class="u_user"></span>
+								<input id="UserName" name="UserName" class="text" style="color: #FFFFFF !important" type="text" >
+							</div>
+							<div class="input_outer">
+								<span  class="us_uer"></span>
+								<input id="Password" name="Password" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" >
+							</div>
+							<div class="mb2">
+                                <span id="mes" ></span>
+                                <a id="LoginSys" name="LoginSys" class="act-but submit" href="javascript:;" style="color: #FFFFFF">登录</a></div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div><!-- /container -->
+		<script src="Scripts/TweenLite.min.js"></script>
+		<script src="Scripts/EasePack.min.js"></script>
+		<script src="Scripts/rAF.js"></script>
+		<script src="Scripts/demo-1.js"></script>
+	</body>
+</html>
